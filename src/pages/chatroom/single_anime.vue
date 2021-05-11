@@ -35,7 +35,7 @@ export default {
       bot: [{
         emotion: "positive",
         displayName: "",
-        picture_url: "https://upload.wikimedia.org/wikipedia/zh/e/e5/Gawr_Gura.png"
+        picture_url: "https://i.imgur.com/0q6TtoU.png"
       }],
       bot_amount: 1
     }

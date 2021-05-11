@@ -125,7 +125,7 @@ export default {
   components: {
   },
   props: {
-      bot: Object,
+      bot: Array,
       bot_amount: Number,
   },
   data () {

@@ -1,16 +1,16 @@
 <template>
     <div class="container">
-    <b-card title="歡迎" sub-title="實驗說明">
+    <b-card title="歡迎來到實驗平台" sub-title="使用說明">
         <b-card-text>
-        Some quick example text to build on the <em>card title</em> and make up the bulk of the card's
-        content.
+        恭喜您成功登入，您現在的帳號為 XXX
         </b-card-text>
 
-        <b-card-text>A second paragraph of text in the card.</b-card-text>
+        <b-card-text>本實驗旨在探討聊天機器人的設計與使用體驗關係之研究。</b-card-text>
 
         
         <a href="#" class="card-link btn btn-link">我有問題</a>
         <router-link to="/start" class="card-link btn btn-primary">開始實驗</router-link>
+        <router-link to="/logout" class="card-link btn btn-link">登出帳號</router-link>
     </b-card>
     </div>
 
