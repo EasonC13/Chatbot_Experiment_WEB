@@ -147,12 +147,19 @@ export default {
       user: 'pricean01@gmail.com',
       already_messages: [],
       messages: [],
-      bots: [{
+      bot: [{
         emotion: "positive",
         displayName: "",
         picture_url: "https://i.imgur.com/pqrLeJW.png"
-      }]
+      }],
+      bot_amount: 3
     }
+  },
+  computed: {
+    bots: function () {
+        return Array(this.bot_amount).fill(this.bot).flat()
+    }
+      
   },
   mounted() {
         let vm = this
