@@ -47,12 +47,12 @@
                     <!-- 中繼資料 -->
                     <div class="meta">
                         <div class="item">
-                            {{message.time}}
+                            {{message.displaytime}}
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- <div id="msg_end" style="height: 0vh" v-if="true"></div> -->
+            <div id="msg_end" style="height: 5%" v-if="true"><p><br></p></div>
         </div>
         </div>
         <div id="input_area">
@@ -110,8 +110,8 @@ function shuffle(array) {
 class Message{
     constructor(text, author, author_img, isright = false) {
         this.text = text
-        var currentdate = new Date();
-        this.time = currentdate.getHours() + ":" + currentdate.getMinutes()
+        this.time = new Date();
+        this.displaytime = this.time.getHours() + ":" + this.time.getMinutes()
         this.author = author
         this.author_img = author_img
         this.random_id = author_img + Math.random().toString(36).substring(7)
@@ -127,12 +127,23 @@ export default {
   props: {
       bot: Array,
       bot_amount: Number,
+      max_round: {
+          type: Number,
+          default: 10
+      },
+      status: {
+          type: String,
+          default: "none"
+      },
   },
   data () {
     return {
       user: 'pricean01@gmail.com',
       already_messages: [],
       messages: [],
+      round: 0,
+      can_chat: true,
+      can_send_msg: true,
     }
   },
   computed: {
@@ -143,6 +154,7 @@ export default {
   },
   mounted() {
         let vm = this
+        window.vm = this
         document.getElementById("chatroom_div_text_area").focus()
         $("#chatroom_div_text_area").keypress(function(e){
             if(e.which == 13 && e.shiftKey){
@@ -159,6 +171,10 @@ export default {
             let out_text = target.innerText
             if(out_text.length == 0){
                 return 0
+            }else if(this.can_chat == false){
+                return 0
+            }else if(this.can_send_msg == false){
+                return 0
             }
 
             var enter = String.fromCharCode(10);
@@ -174,6 +190,15 @@ export default {
             console.log(profile, message)
             this.messages.push(message)
             this.scroll_to_msg(message)
+            this.round += 1
+            //this.can_send_msg = false
+            let vm = this
+
+            if(this.round >= this.max_round){
+                this.$emit("chat_round_out")
+                this.can_chat = false
+                alert("你已經用完聊天額度了")
+            }
             
             // shuffle(this.bots)
 
@@ -193,9 +218,16 @@ export default {
                             email: profile.email,
                             text: out_text,
                             emotion: emotion_code,
-                            response_count: 1
+                            response_count: 1,
+                            response_language: "zh-tw",
                         },
-                    }).then(response => {
+                    }).catch(function (error){
+                        vm.can_send_msg = true
+                        vm.round -= 1
+                        alert("對不起，此訊息發送失敗，請重新發送")
+                        target.innerText = out_text
+                    })
+                    .then(response => {
                         
                         let text = response.data.responses[0]
                         let message = new Message(text, bot.display_name, bot.picture_url)
@@ -203,14 +235,20 @@ export default {
                         
                         setTimeout(()=> {
                             this.messages.push(message)
+                            this.can_send_msg = true
                             this.scroll_to_msg(message)
+                            if(this.can_chat == false){
+                                this.export_messages()
+                            }
                         }, Math.random()*3500)
                     })
             });
         },
         scroll_to_msg(message){
             setTimeout(()=> {
+                
                 let target = document.getElementById(message.random_id)
+                target.scrollIntoView({behavior: "smooth", block: "end"})
                 let target_rect = target.getBoundingClientRect()
                 let text_area = document.getElementById("chatroom_div_text_area")
                 let text_area_rect = text_area.getBoundingClientRect()
@@ -219,13 +257,33 @@ export default {
                                 target_rect.bottom < text_area_rect.top || 
                                 target_rect.top > text_area_rect.bottom)
                 console.log("overlap", overlap)
-                target.scrollIntoView({behavior: "smooth", block: "end"})
+                
                 if(overlap){
                   target.scrollIntoView({behavior: "smooth"})
                 }
                 
             }, 300)
         },
+        export_messages: function(){
+            
+
+            var profile = firebase.auth().currentUser
+            axios({
+                        method: "POST",
+                        url: `https://chatbot.experiment.eason.tw/api/v1/message`, 
+                        headers: {
+                                "accept": "application/json",
+                                'Content-Type': 'application/json'
+                        },
+                        data: {
+                            account: profile.email,
+                            status: this.status,
+                            messages: JSON.stringify(this.messages),
+                        },
+                    }).then(response => {
+                        console.log("已經成功匯出訊息")
+                    })
+        }
 
   }
 }
