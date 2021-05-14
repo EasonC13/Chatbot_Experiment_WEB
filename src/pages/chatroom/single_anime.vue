@@ -5,7 +5,8 @@
         <!-- <div class="col-sm" style="background-image: url('https://i.imgur.com/YsufPQH.png')"> -->
         <Chatroom 
         :bot="this.bot"
-        :bot_amount="this.bot_amount"></Chatroom>
+        :bot_amount="this.bot_amount"
+        :status="this.name"></Chatroom>
         <div class="col-sm">
           <div class=" overflow-hidden">
             
@@ -24,14 +25,14 @@ import chatroom from "./chatroom"
 import { BCard} from 'bootstrap-vue'
 
 export default {
-  name: 'single_real_girl',
+  name: 'single_anime',
   components: {
     BCard, 
     "Chatroom": chatroom,
   },
   data () {
     return {
-      
+      name: 'single_anime',
       bot: [{
         emotion: "positive",
         displayName: "",

@@ -5,7 +5,8 @@
         <!-- <div class="col-sm" style="background-image: url('https://i.imgur.com/YsufPQH.png')"> -->
         <Chatroom 
         :bot="this.bot"
-        :bot_amount="this.bot_amount"></Chatroom>
+        :bot_amount="this.bot_amount"
+        :status="this.name"></Chatroom>
         <div class="col-sm">
           <div class=" overflow-hidden">
             
@@ -31,7 +32,7 @@ export default {
   },
   data () {
     return {
-      
+      name: 'single_real_girl',
       bot: [{
         emotion: "positive",
         displayName: "",

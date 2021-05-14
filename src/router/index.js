@@ -9,6 +9,7 @@ import single_real_boy from '@/pages/chatroom/single_real_boy'
 import single_anonymous from '@/pages/chatroom/single_anonymous'
 import single_anime from '@/pages/chatroom/single_anime'
 import multi_anonymous from '@/pages/chatroom/multi_anonymous'
+import warmup from '@/pages/chatroom/warmup'
 import login from '@/pages/login'
 import logout from '@/pages/logout'
 Vue.use(Router)
@@ -17,11 +18,7 @@ const router =  new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld,
-      meta: {
-        requiresAuth: true
-      }
+      redirect: "intro"
     },
     {
       path: '/intro',
@@ -75,6 +72,14 @@ const router =  new Router({
       path: '/multi_anonymous',
       name: 'multi_anonymous',
       component: multi_anonymous,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/warmup',
+      name: 'warmup',
+      component: warmup,
       meta: {
         requiresAuth: true
       }
