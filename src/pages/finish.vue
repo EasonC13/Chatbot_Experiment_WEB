@@ -1,8 +1,8 @@
 <template>
     <div class="container">
-    <b-card title="歡迎來到實驗平台" sub-title="使用說明" class="text-right">
+    <b-card title="Debrief Time" sub-title="揭露實驗內容" class="text-right">
         <b-card-text>
-        恭喜您成功登入，您現在的帳號為 XXX
+        感謝你完成實驗，這邊是關於本次實驗設計背後的理論與假設
         </b-card-text>
 
         <b-card-text>本實驗旨在探討聊天機器人的設計與使用體驗關係之研究。</b-card-text>
@@ -39,7 +39,7 @@ import firebase from "firebase"
 
 import { BCard} from 'bootstrap-vue'
 export default {
-  name: 'Intro',
+  name: 'finish',
   components: {
     BCard, 
   },
@@ -50,23 +50,7 @@ export default {
     }
   },
   mounted: function(){
-    axios({
-      method: "POST",
-      url: `https://chatbot.experiment.eason.tw/api/v1/user`, 
-      headers: {
-              "accept": "application/json",
-              'Content-Type': 'application/json'
-      },
-      data: {
-          account: firebase.auth().currentUser.email
-      },
-    }).catch(function (error){
-        alert("對不起，網路錯誤，請重新登入")
-        this.$router.replace('logout');
-    })
-    .then(response => {
-        console.log("註冊成功", response)
-    })
+    
   },
   methods: {
     alert: function(text){

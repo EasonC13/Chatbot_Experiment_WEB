@@ -41,7 +41,7 @@
                         {{message.author}}
                     </div>
                     <!-- 文字 -->
-                    <div class="text">
+                    <div class="text" style="text-align:left;">
                         <p v-for="(text, index) in message.text.split('\n')">{{text}}</p>
                     </div>
                     <!-- 中繼資料 -->

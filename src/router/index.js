@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 
 import intro from '@/pages/intro'
+import finish from '@/pages/finish'
 import start from '@/pages/start'
 import single_real_girl from '@/pages/chatroom/single_real_girl'
 import single_real_boy from '@/pages/chatroom/single_real_boy'
@@ -24,6 +25,14 @@ const router =  new Router({
       path: '/intro',
       name: 'intro',
       component: intro,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/finish',
+      name: 'finish',
+      component: finish,
       meta: {
         requiresAuth: true
       }
@@ -77,8 +86,8 @@ const router =  new Router({
       }
     },
     {
-      path: '/warmup',
-      name: 'warmup',
+      path: '/warm_up',
+      name: 'warm_up',
       component: warmup,
       meta: {
         requiresAuth: true

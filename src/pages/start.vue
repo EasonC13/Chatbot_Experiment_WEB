@@ -11,6 +11,12 @@
     </div>
 </template>
 <script>
+
+const axios = require('axios');
+const $ = require("jquery")
+import Cookies from "js-cookie"
+import firebase from "firebase"
+
 // 在這裡，會先從後端讀取使用者的隨機狀態，再把使用者轉送到對應的隨機狀態中
 import { BCard} from 'bootstrap-vue'
 export default {
@@ -20,11 +26,24 @@ export default {
   },
   data () {
     return {
-      user: 'pricean01@gmail.com'
+      user: firebase.auth().currentUser
     }
   },
-  methods: {
-
+  mounted: function(){
+    axios({
+      method: "GET",
+      url: `https://chatbot.experiment.eason.tw/api/v1/status/user/${firebase.auth().currentUser.email}`, 
+      headers: {
+              "accept": "application/json",
+              'Content-Type': 'application/json'
+      },
+    }).catch(function (error){
+        alert("對不起，網路錯誤，請重新整理頁面")
+        window.location.reload()
+    })
+    .then(response => {
+        this.$router.replace(response.data.status);
+    })
   }
 }
 </script>

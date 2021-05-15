@@ -8,17 +8,19 @@
             <div class="message text" v-for="(item, index) in already_messages" :key="'test'+index">
                 <!-- 大頭貼 -->
                 <div class="avatar">
-                    <img src="https://i.pinimg.com/originals/26/26/0d/26260d6850d544d5d488bfe64f84ef38.jpg"/>
+                    <img src="https://i.imgur.com/OGPH5eF.png"/>
                 </div>
                 <!-- 內容 -->
                 <div class="content">
                     <!-- 傳訊者 -->
                     <div class="author">
-                        熊貓貓
+                        陳怡升
                     </div>
                     <!-- 文字 -->
-                    <div class="text">
-                        <p>尼好，世界</p>
+                    <div class="text" style="text-align:left;">
+                        <p>你好，我是實驗的執行者 Eason<br>
+                        現在是暖身階段。<br><br>
+                        請輸入十次任意內容<br>完成本階段。</p>
                     </div>
                     <!-- 中繼資料 -->
                     <div class="meta">
@@ -41,7 +43,7 @@
                         {{message.author}}
                     </div>
                     <!-- 文字 -->
-                    <div class="text">
+                    <div class="text" style="text-align:left;">
                         <p v-for="(text, index) in message.text.split('\n')">{{text}}</p>
                     </div>
                     <!-- 中繼資料 -->
@@ -55,7 +57,7 @@
             <div id="msg_end" style="height: 5%" v-if="true"><p><br></p></div>
         </div>
         </div>
-        <div id="input_area">
+        <div id="input_area" v-if="can_chat">
             <div id="text_area">
                 <div class="textarea" id="chatroom_div_text_area" role="textbox" contenteditable
                  ></div>
@@ -63,6 +65,11 @@
             <div id="send_button" class="align-items-right" @click="send_msg">
                 <i class="now-ui-icons ui-1_send"></i>
             </div>
+        </div>
+        <div id="input_area" v-if="can_chat==false">
+            <button id="text_area"
+             class="btn btn-primary"
+             @click="move_next">進入下一階段</button>
         </div>
     </div>
 </template>
@@ -139,7 +146,7 @@ export default {
   data () {
     return {
       user: 'pricean01@gmail.com',
-      already_messages: [],
+      already_messages: [1],
       messages: [],
       round: 0,
       can_chat: true,
@@ -195,9 +202,9 @@ export default {
             let vm = this
 
             if(this.round >= this.max_round){
-                this.$emit("chat_round_out")
+                
                 this.can_chat = false
-                alert("你已經用完聊天額度了")
+                //alert("你已經用完聊天額度了")
             }
             
             // shuffle(this.bots)
@@ -218,7 +225,7 @@ export default {
                             if(this.can_chat == false){
                                 this.export_messages()
                             }
-                        }, Math.random()*3500)
+                        }, Math.random()*35)
             });
         },
         scroll_to_msg(message){
@@ -227,7 +234,7 @@ export default {
                 let target = document.getElementById(message.random_id)
                 target.scrollIntoView({behavior: "smooth", block: "end"})
                 let target_rect = target.getBoundingClientRect()
-                let text_area = document.getElementById("chatroom_div_text_area")
+                let text_area = document.getElementById("input_area")
                 let text_area_rect = text_area.getBoundingClientRect()
                 var overlap = !(target_rect.right < text_area_rect.left || 
                                 target_rect.left > text_area_rect.right || 
@@ -260,6 +267,9 @@ export default {
                     }).then(response => {
                         console.log("已經成功匯出訊息")
                     })
+        },
+        move_next: function(){
+            this.$emit("chat_round_out")
         }
 
   }

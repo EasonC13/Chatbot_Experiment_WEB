@@ -6,7 +6,8 @@
         <Chatroom 
         :bot="this.bot"
         :bot_amount="this.bot_amount"
-        :status="this.name"></Chatroom>
+        :status="this.name"
+        @chat_round_out="finish"></Chatroom>
         <div class="col-sm">
           <div class=" overflow-hidden">
             
@@ -21,7 +22,10 @@
 </template>
 <script>
 import chatroom from "./warmup_chatroom"
-// 在這裡，會先從後端讀取使用者的隨機狀態，再把使用者轉送到對應的隨機狀態中
+import firebase from "firebase"
+
+const axios = require('axios');
+const $ = require("jquery")
 import { BCard} from 'bootstrap-vue'
 
 export default {
@@ -36,7 +40,7 @@ export default {
       bot: [{
         emotion: "positive",
         displayName: "",
-        picture_url: "https://i.imgur.com/pqrLeJW.png"
+        picture_url: "https://i.imgur.com/OGPH5eF.png"
       }],
       bot_amount: 1
     }
@@ -47,6 +51,25 @@ export default {
   mounted() {
     },
   methods: {
+    finish: function(){
+      //pop up window, said that is how you will do in experiment.
+      axios({
+        method: "PUT",
+        url: `https://chatbot.experiment.eason.tw/api/v1/status/user/${firebase.auth().currentUser.email}`, 
+        headers: {
+                "accept": "application/json",
+                'Content-Type': 'application/json'
+        },
+      }).catch(function (error){
+          alert("對不起，網路錯誤，請重新登入")
+          this.$router.replace('logout');
+      })
+      .then(response => {
+          console.log("任務已完成", response)
+          this.$router.replace("start")
+      })
+      
+    }
   }
 }
 </script>
