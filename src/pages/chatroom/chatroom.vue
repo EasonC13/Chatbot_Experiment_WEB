@@ -6,7 +6,7 @@
         <!-- 使用 Telegram 樣式 -->
         <div class="cu chat" data-style="telegram" id="chatroom">
             <div class="message text" v-for="(item, index) in already_messages" :key="'test'+index"
-            style="width:90%">
+            style="max-width:90%">
                 <!-- 大頭貼 -->
                 <div class="avatar">
                     <img src="https://i.pinimg.com/originals/26/26/0d/26260d6850d544d5d488bfe64f84ef38.jpg"/>
@@ -30,7 +30,8 @@
                 </div>
             </div>
             <div class="message text" :class="{right: message.right, read: message.right}" v-for="(message, index) in messages" 
-             :key="index" :id='message.random_id'>
+             :key="index" :id='message.random_id'
+             :style="getMsgWidthStyle(message)">
                 <!-- 大頭貼 -->
                 <div class="avatar">
                     <img :src="message.author_img"/>
@@ -42,7 +43,7 @@
                         {{message.author}}
                     </div>
                     <!-- 文字 -->
-                    <div class="text" style="text-align:left;">
+                    <div class="text" :style="getMsgTextStyle(message.right)">
                         <p v-for="(text, index) in message.text.split('\n')">{{text}}</p>
                     </div>
                     <!-- 中繼資料 -->
@@ -296,6 +297,15 @@ export default {
         },
     move_next: function(){
         this.$emit("next")
+    },
+    getMsgTextStyle: function(isRight){
+        if(isRight) return {"text-align": "right"}
+        return {"text-align": "left"}
+    },
+    getMsgWidthStyle: function(msg){
+        console.log("getMsgWidthStyle", msg, msg.text.length > 25 && msg.right==false)
+        if(msg.text.length > 21 && msg.right==false) return {"width": "90%"}
+        return {}
     }
   }
 }

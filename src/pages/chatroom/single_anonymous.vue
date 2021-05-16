@@ -26,7 +26,7 @@
             
           </div>
           <h1>實驗提示</h1>
-          One of three columns
+          跟對方聊聊天吧<br>如果有多個回應，請想像你在做群組聊天
 
           <div style="height: 100vh" v-if="true"></div>
         </div>
