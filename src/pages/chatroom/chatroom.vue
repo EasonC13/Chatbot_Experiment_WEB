@@ -1,5 +1,5 @@
 <template lang="">
-    <div class="col-sm" style="background-color: rgb(218,218,218);">
+    <div class="col-sm" style="background-color: rgb(250,250,250);">
           <div class="chatroom_chat_container overflow-scroll">
 
        
