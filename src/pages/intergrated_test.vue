@@ -3,10 +3,10 @@
       <div class="container" v-if="step=='fill_form'">
           <b-card title="說明" sub-title="" align="left">
               <b-card-text>
-              恭喜您，您已完成聊天
+              恭喜您，您已完成實驗中的所有聊天階段
               </b-card-text>
               <b-card-text>
-              接下來要請您填寫本輪的使用體驗量表
+              接下來要請您填寫總結表單
               </b-card-text>
 
               <b-card-text>
@@ -28,21 +28,6 @@
               
           </b-card>
       </div>
-      <div class="container" v-if="step=='finish'">
-        <b-card title="說明" sub-title="" align="left">
-            <b-card-text>
-            感謝您，您已完成本階段的實驗
-            </b-card-text>
-            <b-card-text>
-            本實驗總共有 6 個階段，您目前還剩下 {{remain - 1}} 個。
-            </b-card-text>
-
-            
-
-            <b-card-text>準備好後，請按「開始」</b-card-text>
-            <button @click="next" class="card-link btn btn-primary">開始</button>
-        </b-card>
-      </div>
     </div>
 </template>
 <script>
@@ -54,15 +39,15 @@ import Cookies from "js-cookie"
 import firebase from "firebase"
 
 export default {
-  name: 'finish_step',
+  name: 'intergrated_test',
   components: {
     BCard, 
   },
   props: {
-      status: String
   },
   data () {
     return {
+        status: "integrated",
         remain: "",
         step: "fill_form",
         fill_step:'not_yet',
@@ -114,7 +99,7 @@ export default {
           }
           if(response.data.is_fill){
             this.user_move_next()
-            this.step = 'finish'
+            this.$emit("finish")
           }else{
             alert("您尚未完成表單填寫！")
           }
@@ -137,6 +122,7 @@ export default {
           if(response=="error"){
               return 0
           }
+          this.$router.replace("start")
         })
       },
       init: function(){

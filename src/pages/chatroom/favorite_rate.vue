@@ -24,7 +24,7 @@
             
 
             <b-card-text>
-                        請輸入你認為你跟他的親近程度（1-7分）。<br>
+                        請輸入你認為你現在跟他的親近程度（1-7分）。<br>
                         分數評比請參考下圖</b-card-text>
 
             <img src="https://i.imgur.com/mFwdrri.png" width="100%">
@@ -83,8 +83,8 @@ export default {
   },
   data () {
     return {
-        IOS_score: "3",
-        favorite: "3"
+        IOS_score: "",
+        favorite: ""
     }
   },
   computed: {

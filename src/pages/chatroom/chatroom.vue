@@ -5,7 +5,8 @@
        
         <!-- 使用 Telegram 樣式 -->
         <div class="cu chat" data-style="telegram" id="chatroom">
-            <div class="message text" v-for="(item, index) in already_messages" :key="'test'+index">
+            <div class="message text" v-for="(item, index) in already_messages" :key="'test'+index"
+            style="width:90%">
                 <!-- 大頭貼 -->
                 <div class="avatar">
                     <img src="https://i.pinimg.com/originals/26/26/0d/26260d6850d544d5d488bfe64f84ef38.jpg"/>
@@ -52,10 +53,15 @@
                     </div>
                 </div>
             </div>
-            <div id="msg_end" style="height: 5%" v-if="true"><p><br></p></div>
+            <div id="msg_end" style="height: 10%" v-if="true"><p><br></p></div>
         </div>
         </div>
-        <div id="input_area">
+        <div id="input_area" v-if="can_chat==false & can_send_msg">
+            <button id="text_area"
+             class="btn btn-primary"
+             @click="move_next">進入下一階段</button>
+        </div>
+        <div id="input_area" v-else>
             <div id="text_area">
                 <div class="textarea" id="chatroom_div_text_area" role="textbox" contenteditable
                  ></div>
@@ -63,11 +69,6 @@
             <div id="send_button" class="align-items-right" @click="send_msg">
                 <i class="now-ui-icons ui-1_send"></i>
             </div>
-        </div>
-        <div id="input_area" v-if="can_chat==false">
-            <button id="text_area"
-             class="btn btn-primary"
-             @click="move_next">進入下一階段</button>
         </div>
     </div>
 </template>
@@ -196,19 +197,18 @@ export default {
             this.messages.push(message)
             this.scroll_to_msg(message)
             this.round += 1
-            //this.can_send_msg = false
+            this.can_send_msg = false
             let vm = this
 
             if(this.round >= this.max_round){
                 this.$emit("chat_round_out")
                 this.can_chat = false
-                alert("你已經用完聊天額度了")
+                //alert("你已經用完聊天額度了")
             }
             
-            // shuffle(this.bots)
+            let response_count = 0
 
             this.bots.forEach(bot => {
-                console.log("EEE", bot)
 
                 let emotion_code = API_emotion_mapping[emotion_map_to_chinese[bot.emotion]] || 1
                 
@@ -240,10 +240,15 @@ export default {
                         
                         setTimeout(()=> {
                             this.messages.push(message)
-                            this.can_send_msg = true
+                            
                             this.scroll_to_msg(message)
-                            if(this.can_chat == false){
-                                this.export_messages()
+                            response_count += 1
+                            console.log(response_count, this.can_chat)
+                            if(response_count == this.bots.length){
+                                this.can_send_msg = true
+                                if(this.can_chat == false){
+                                    this.export_messages()
+                                }
                             }
                         }, Math.random()*3500)
                     })
@@ -255,13 +260,13 @@ export default {
                 let target = document.getElementById(message.random_id)
                 target.scrollIntoView({behavior: "smooth", block: "end"})
                 let target_rect = target.getBoundingClientRect()
-                let text_area = document.getElementById("chatroom_div_text_area")
+                let text_area = document.getElementById("text_area")
                 let text_area_rect = text_area.getBoundingClientRect()
                 var overlap = !(target_rect.right < text_area_rect.left || 
                                 target_rect.left > text_area_rect.right || 
                                 target_rect.bottom < text_area_rect.top || 
                                 target_rect.top > text_area_rect.bottom)
-                console.log("overlap", overlap)
+                //console.log("overlap", overlap)
                 
                 if(overlap){
                   target.scrollIntoView({behavior: "smooth"})
@@ -302,7 +307,7 @@ export default {
     }
     #chatroom_div_text_area{
         padding-top: 5px;
-        min-height: 2em;
+        min-height: 1.85em;
         line-height: 1.1;
     }
     #input_area{

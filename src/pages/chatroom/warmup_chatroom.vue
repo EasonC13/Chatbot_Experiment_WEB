@@ -20,6 +20,7 @@
                     <div class="text" style="text-align:left;">
                         <p>你好，我是實驗的執行者 Eason<br>
                         現在是暖身階段。<br><br>
+                        我們要確保你熟悉聊天室的操作<br>
                         請輸入十次任意內容<br>完成本階段。</p>
                     </div>
                     <!-- 中繼資料 -->

@@ -1,15 +1,26 @@
 <template lang="">
     <div class="">
       <Favorite
-      :bot="this.bot"
-      status="pre_test"></Favorite>
+      :bots="this.bot.slice()"
+      :status="this.name"
+      phase="pre_test"
+      @finish="step='instruction'"
+      v-if="step=='pre_test'"></Favorite>
+
+      <Instruction
+      v-if="step=='instruction'"
+      :bots="this.bot.slice()"
+      :bot_amount="this.bot_amount"
+      @next="step='chatting'"></Instruction>
       
-      <div class="row" v-if="false">
+      <div class="row" v-if="step=='chatting'">
         <!-- <div class="col-sm" style="background-image: url('https://i.imgur.com/YsufPQH.png')"> -->
         <Chatroom 
         :bot="this.bot"
         :bot_amount="this.bot_amount"
-        :status="this.name"></Chatroom>
+        :status="this.name"
+        @next="step='post_test'"></Chatroom>
+
         <div class="col-sm">
           <div class=" overflow-hidden">
             
@@ -20,12 +31,24 @@
           <div style="height: 100vh" v-if="true"></div>
         </div>
       </div>
+      <Favorite
+      :bots="this.bot.slice()"
+      :status="this.name"
+      phase="post_test"
+      @finish="step='finish'"
+      v-if="step=='post_test'"></Favorite>
+      
+      <Finish
+      :status="this.name"
+      v-if="step=='finish'"
+      ></Finish>
     </div>
 </template>
 <script>
 import chatroom from "./chatroom"
 import process_fav_rate from "./process_fav_rate"
-// 在這裡，會先從後端讀取使用者的隨機狀態，再把使用者轉送到對應的隨機狀態中
+import instruction from "./instruction"
+import finish_step from "./finish_step"
 import { BCard} from 'bootstrap-vue'
 
 export default {
@@ -33,17 +56,20 @@ export default {
   components: {
     BCard, 
     "Chatroom": chatroom,
-    "Favorite": process_fav_rate
+    "Favorite": process_fav_rate,
+    "Instruction": instruction,
+    "Finish": finish_step,
   },
   data () {
     return {
+      step: "pre_test",
       name: 'multi_anonymous',
       bot: [{
         emotion: "positive",
-        displayName: "",
+        displayName: "-",
         picture_url: "https://i.imgur.com/pqrLeJW.png"
       }],
-      bot_amount: 3
+      bot_amount: 5
     }
   },
   computed: {

@@ -12,6 +12,8 @@ import single_anime from '@/pages/chatroom/single_anime'
 import multi_anime from '@/pages/chatroom/multi_anime'
 import multi_anonymous from '@/pages/chatroom/multi_anonymous'
 import warmup from '@/pages/chatroom/warmup'
+import intergrated_test from '@/pages/intergrated_test'
+import debrief from '@/pages/debrief'
 import login from '@/pages/login'
 import logout from '@/pages/logout'
 Vue.use(Router)
@@ -98,6 +100,22 @@ const router =  new Router({
       path: '/warm_up',
       name: 'warm_up',
       component: warmup,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/debrief',
+      name: 'debrief',
+      component: debrief,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/intergrated_test',
+      name: 'intergrated_test',
+      component: intergrated_test,
       meta: {
         requiresAuth: true
       }

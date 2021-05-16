@@ -1,15 +1,18 @@
 <template>
   <div class="login">
     <h3>Sign In</h3>
+    <p>
+      點選下方按鈕以使用 Google 帳號繼續 <br>
+    </p>
+    <button @click="socialLogin" class="social-button">
+        <img alt="Google Logo" src="https://png.monster/wp-content/uploads/2020/11/b64cc812d68e951149b3e1a21c9a49e7-12019a02.png">
+    </button>
+    <p>
+     或使用帳號密碼登入 <br>
+    </p>
     <input type="text" v-model="email" placeholder="Email"><br>
     <input type="password" v-model="password" placeholder="Password"><br>
-    <button @click="login">Connection</button>
-    <p>
-      or Sign In with Google <br>
-      <button @click="socialLogin" class="social-button">
-        <img alt="Google Logo" src="https://png.monster/wp-content/uploads/2020/11/b64cc812d68e951149b3e1a21c9a49e7-12019a02.png">
-      </button>
-    </p>
+    <button @click="login">Login</button>
     <p>You don't have an account ? You can <router-link to="/sign-up">create one</router-link></p>
   </div>
 </template>
@@ -28,7 +31,7 @@
     methods: {
       login() {
         firebase.auth().signInWithEmailAndPassword(this.email, this.password).then((user) => {
-          this.$router.replace('home');
+          this.$router.replace('intro');
         }).catch((err) => {
           alert('Oops. ' + err.message)
         });
@@ -37,7 +40,7 @@
         const provider = new firebase.auth.GoogleAuthProvider();
 
         firebase.auth().signInWithPopup(provider).then((result) => {
-          this.$router.replace('home');
+          this.$router.replace('intro');
         }).catch((err) => {
           alert('Oops. ' + err.message)
         });
