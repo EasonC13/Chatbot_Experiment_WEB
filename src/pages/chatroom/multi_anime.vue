@@ -62,7 +62,7 @@ export default {
   },
   data () {
     return {
-      step: "finish",
+      step: "pre_test",
       name: 'multi_anime',
       bot: [
       {

@@ -38,6 +38,10 @@ export default {
     
   },
   mounted() {
+      this.display = false
+      let vm = this
+      setTimeout(x => {vm.display = true}, 3)
+      
       this.bots.shift()
       console.log(this.bots)
       console.log("status",this.status)
@@ -49,7 +53,6 @@ export default {
       if(next_bot){
         this.current_bot = next_bot
         this.display = false
-        console.log("QQQ")
         let vm = this
         setTimeout(x => {vm.display = true}, 3)
         

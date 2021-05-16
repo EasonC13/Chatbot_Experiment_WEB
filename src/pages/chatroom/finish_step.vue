@@ -9,6 +9,10 @@
               接下來要請你填寫本輪的使用體驗量表
               </b-card-text>
 
+              <b-card-text>
+              請於「受試者帳號（信箱）」欄位<br>輸入你的信箱 {{user_email}}
+              </b-card-text>
+
               <div v-if="fill_step=='not_yet'">
                 <button @click="open_form" class="card-link btn btn-primary">前往表單</button>
               </div>
@@ -17,6 +21,9 @@
                 <b-card-text>如果已經填寫完成，請按「下一步」</b-card-text>
                 <button @click="open_form" class="card-link btn btn-secondary">再次前往表單</button>
                 <button @click="finish_form" class="card-link btn btn-primary">下一步</button>
+              </div>
+              <div v-if="checking_form_fill">
+                請稍候，系統正在確認你剛剛填寫的資料
               </div>
               
           </b-card>
@@ -59,7 +66,8 @@ export default {
         remain: "",
         step: "fill_form",
         fill_step:'not_yet',
-        form_url: ""
+        form_url: "",
+        checking_form_fill: false,
     }
   },
   computed: {
@@ -67,6 +75,9 @@ export default {
         window.vm = this
         return this.bots.length * this.bot_amount
     },
+    user_email: function(){
+      return firebase.auth().currentUser.email
+    }
   },
   mounted() {
       try{
@@ -78,14 +89,35 @@ export default {
     },
   methods: {
       next(){
-          this.$emit("next")
+          this.$router.replace('start');
       },
       open_form(){
         window.open(this.form_url)
         this.fill_step = "open"
       },
       finish_form(){
-        this.step = 'finish'
+        this.checking_form_fill = true
+        axios({
+          method: "GET",
+          url: `https://chatbot.experiment.eason.tw/api/v1/user/${firebase.auth().currentUser.email}/form/${this.status}`, 
+          headers: {
+                  "accept": "application/json",
+                  'Content-Type': 'application/json'
+          },
+        }).catch(function (error){
+            alert("網路錯誤，請再試一次")
+            return "error"
+        })
+        .then(response => {
+          if(response=="error"){
+              return 0
+          }
+          if(response.data.is_fill){
+            this.step = 'finish'
+          }else{
+            alert("您尚未完成表單填寫！")
+          }
+        })
       },
       init: function(){
         let vm = this

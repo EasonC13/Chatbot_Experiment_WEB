@@ -83,8 +83,8 @@ export default {
   },
   data () {
     return {
-        IOS_score: "",
-        favorite: ""
+        IOS_score: "3",
+        favorite: "3"
     }
   },
   computed: {
