@@ -14,7 +14,7 @@
 
 const axios = require('axios');
 const $ = require("jquery")
-import Cookies from "js-cookie"
+const Cookies = require("js-cookie")
 import firebase from "firebase"
 
 // 在這裡，會先從後端讀取使用者的隨機狀態，再把使用者轉送到對應的隨機狀態中

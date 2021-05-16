@@ -20,7 +20,7 @@
 import { BCard} from 'bootstrap-vue'
 const axios = require('axios');
 const $ = require("jquery")
-import Cookies from "js-cookie"
+const Cookies = require("js-cookie")
 import firebase from "firebase"
 
 export default {

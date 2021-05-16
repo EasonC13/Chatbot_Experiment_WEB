@@ -37,7 +37,7 @@
 
 const axios = require('axios');
 const $ = require("jquery")
-import Cookies from "js-cookie"
+const Cookies = require("js-cookie")
 import firebase from "firebase"
 
 import { BCard} from 'bootstrap-vue'
