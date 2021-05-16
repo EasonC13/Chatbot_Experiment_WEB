@@ -64,6 +64,11 @@
                 <i class="now-ui-icons ui-1_send"></i>
             </div>
         </div>
+        <div id="input_area" v-if="can_chat==false">
+            <button id="text_area"
+             class="btn btn-primary"
+             @click="move_next">進入下一階段</button>
+        </div>
     </div>
 </template>
 <script>
@@ -283,8 +288,10 @@ export default {
                     }).then(response => {
                         console.log("已經成功匯出訊息")
                     })
-        }
-
+        },
+    move_next: function(){
+        this.$emit("next")
+    }
   }
 }
 </script>

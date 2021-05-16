@@ -23,8 +23,9 @@
           <router-link to="/multi_anonymous" class="card-link btn btn-link">multi_anonymous</router-link>
           <router-link to="/single_anonymous" class="card-link btn btn-link">single_anonymous</router-link>
           <router-link to="/single_anime" class="card-link btn btn-link">single_anime</router-link>
-          <router-link to="/single_real_boy" class="card-link btn btn-link">single_real_boy</router-link>
-          <router-link to="/single_real_girl" class="card-link btn btn-link">single_real_girl</router-link>
+          <router-link to="/multi_anime" class="card-link btn btn-link">multi_anime</router-link>
+          <!-- <router-link to="/single_real_boy" class="card-link btn btn-link">single_real_boy</router-link>
+          <router-link to="/single_real_girl" class="card-link btn btn-link">single_real_girl</router-link> -->
         </div>
     </b-card>
     </div>

@@ -9,6 +9,7 @@ import single_real_girl from '@/pages/chatroom/single_real_girl'
 import single_real_boy from '@/pages/chatroom/single_real_boy'
 import single_anonymous from '@/pages/chatroom/single_anonymous'
 import single_anime from '@/pages/chatroom/single_anime'
+import multi_anime from '@/pages/chatroom/multi_anime'
 import multi_anonymous from '@/pages/chatroom/multi_anonymous'
 import warmup from '@/pages/chatroom/warmup'
 import login from '@/pages/login'
@@ -73,6 +74,14 @@ const router =  new Router({
       path: '/single_anime',
       name: 'single_anime',
       component: single_anime,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/multi_anime',
+      name: 'multi_anime',
+      component: multi_anime,
       meta: {
         requiresAuth: true
       }

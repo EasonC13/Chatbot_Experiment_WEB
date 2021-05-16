@@ -1,7 +1,10 @@
 <template lang="">
     <div class="">
+      <Favorite
+      :bot="this.bot"
+      status="pre_test"></Favorite>
       
-      <div class="row">
+      <div class="row" v-if="false">
         <!-- <div class="col-sm" style="background-image: url('https://i.imgur.com/YsufPQH.png')"> -->
         <Chatroom 
         :bot="this.bot"
@@ -21,6 +24,7 @@
 </template>
 <script>
 import chatroom from "./chatroom"
+import process_fav_rate from "./process_fav_rate"
 // 在這裡，會先從後端讀取使用者的隨機狀態，再把使用者轉送到對應的隨機狀態中
 import { BCard} from 'bootstrap-vue'
 
@@ -29,6 +33,7 @@ export default {
   components: {
     BCard, 
     "Chatroom": chatroom,
+    "Favorite": process_fav_rate
   },
   data () {
     return {

@@ -35,9 +35,9 @@ export default {
       name: 'single_anime',
       bot: [{
         emotion: "positive",
-        displayName: "",
-        picture_url: "https://i.imgur.com/0q6TtoU.png"
-      }],
+        displayName: "米卡莎",
+        picture_url: "https://i.imgur.com/JV3K1bS.png"//Mikasa
+      },],
       bot_amount: 1
     }
   },
