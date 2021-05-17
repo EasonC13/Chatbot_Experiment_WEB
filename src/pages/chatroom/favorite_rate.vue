@@ -1,13 +1,13 @@
 <template lang="">
     <div class="">
       <div class="container">
-        <b-card title="好感度測量" align="left">
+        <b-card title="好感度測量" align="left" style="text-align: left;">
             <div v-if="phase=='pre_test'">
               <b-card-text>
                 這是{{bot.displayName}}，你接下來聊天的對象。
               </b-card-text>
               <img :src="bot.picture_url" width="30%">
-              <b-card-text>
+              <b-card-text><br>
                 在開始前我們想知道你對他的好感度。
               </b-card-text>
             </div>
@@ -16,27 +16,29 @@
                 這是{{bot.displayName}}，你剛剛聊天的對象。
               </b-card-text>
               <img :src="bot.picture_url" width="30%">
-              <b-card-text>
+              <b-card-text><br>
                 在結束後我們想知道你對他的好感度。
               </b-card-text>
             </div>
+            <br>
+            <h4>親近度指標</h4>
 
-            
+            <p>
+            請輸入你認為你現在跟他的親近程度（1-7）。<br>
+            數字與對應的圖片，請參考下圖的提示：</p>
 
-            <b-card-text>
-                        請輸入你認為你現在跟他的親近程度（1-7分）。<br>
-                        分數評比請參考下圖</b-card-text>
-
-            <img src="https://i.imgur.com/mFwdrri.png" width="100%">
+            <img src="https://i.imgur.com/1N02iEe.png" width="100%">
 
             <div class="input-group mb-3">
               <div class="input-group-prepend">
               </div>
-              <input type="text" class="form-control" placeholder="親近程度（數字 1 - 7 分）"
+              <input type="text" class="form-control" placeholder="親近程度（數字 1 - 7）"
               aria-label="Default" aria-describedby="inputGroup-sizing-default"
               v-model="IOS_score">
             </div>
-
+            
+            <br>
+            <h4>好感度評分</h4>
             <b-card-text>另外，如果給滿分是 100 分，你覺得你現在對他的好感度是幾分？</b-card-text>
 
             <div class="input-group mb-3">
@@ -46,8 +48,8 @@
               aria-label="Default" aria-describedby="inputGroup-sizing-default"
               v-model="favorite">
             </div>
-
-            <b-card-text>完成後，請按「下一步」</b-card-text>
+            <br>
+            <p class="text-secondary">完成後，請按「下一步」</p>
 
             <b-card-text></b-card-text>
 

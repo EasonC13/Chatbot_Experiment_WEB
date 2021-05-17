@@ -21,15 +21,7 @@
         :status="this.name"
         @next="step='post_test'"></Chatroom>
 
-        <div class="col-sm">
-          <div class=" overflow-hidden">
-            
-          </div>
-          <h1>實驗提示</h1>
-          跟對方聊聊天吧<br>如果有多個回應，請想像你在做群組聊天<br>聊完十輪以後，會進入下一階段，在那之前請盡情的聊天吧！
-
-          <div style="height: 100vh" v-if="true"></div>
-        </div>
+        <Hint></Hint>
       </div>
       <Favorite
       :bots="this.bot.slice()"
@@ -49,6 +41,7 @@ import chatroom from "./chatroom"
 import process_fav_rate from "./process_fav_rate"
 import instruction from "./instruction"
 import finish_step from "./finish_step"
+import chatroom_hint from "./chatroom_hint"
 import { BCard} from 'bootstrap-vue'
 
 export default {
@@ -59,6 +52,7 @@ export default {
     "Favorite": process_fav_rate,
     "Instruction": instruction,
     "Finish": finish_step,
+    "Hint": chatroom_hint,
   },
   data () {
     return {
@@ -66,7 +60,7 @@ export default {
       name: 'multi_anonymous',
       bot: [{
         emotion: "positive",
-        displayName: "-",
+        displayName: "",
         picture_url: "https://i.imgur.com/pqrLeJW.png"
       }],
       bot_amount: 5

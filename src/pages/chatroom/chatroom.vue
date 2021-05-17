@@ -1,5 +1,5 @@
 <template lang="">
-    <div class="col-sm" style="background-color: rgb(250,250,250);">
+    <div class="col-sm" style="background-color: rgb(250,250,250); min-height: 100vh;">
           <div class="chatroom_chat_container overflow-scroll">
 
        
@@ -162,6 +162,7 @@ export default {
   mounted() {
         let vm = this
         window.vm = this
+        this.router_param_update()
         document.getElementById("chatroom_div_text_area").focus()
         $("#chatroom_div_text_area").keypress(function(e){
             if(e.which == 13 && e.shiftKey){
@@ -198,6 +199,9 @@ export default {
             this.messages.push(message)
             this.scroll_to_msg(message)
             this.round += 1
+
+            this.router_param_update()
+
             this.can_send_msg = false
             let vm = this
 
@@ -259,19 +263,25 @@ export default {
             setTimeout(()=> {
                 
                 let target = document.getElementById(message.random_id)
-                target.scrollIntoView({behavior: "smooth", block: "end"})
-                let target_rect = target.getBoundingClientRect()
-                let text_area = document.getElementById("text_area")
-                let text_area_rect = text_area.getBoundingClientRect()
-                var overlap = !(target_rect.right < text_area_rect.left || 
-                                target_rect.left > text_area_rect.right || 
-                                target_rect.bottom < text_area_rect.top || 
-                                target_rect.top > text_area_rect.bottom)
-                //console.log("overlap", overlap)
+                target.scrollIntoView({behavior: "smooth"})
+
+                // 本來有重疊的，但是因為我改成 Fix 排版，就沒了，所以這段註解掉
+                // setTimeout(i => {
+                //     let target_rect = target.getBoundingClientRect()
+                //     let text_area = document.getElementById("text_area")
+                //     let text_area_rect = text_area.getBoundingClientRect()
+                //     var overlap = !(target_rect.right < text_area_rect.left || 
+                //                     target_rect.left > text_area_rect.right || 
+                //                     target_rect.bottom < text_area_rect.top || 
+                //                     target_rect.top > text_area_rect.bottom)
+                //     //console.log("overlap", overlap)
+                    
+                //     if(overlap){
+                //     target.scrollIntoView({behavior: "smooth"})
+                //     }
+
+                // }, 300)
                 
-                if(overlap){
-                  target.scrollIntoView({behavior: "smooth"})
-                }
                 
             }, 300)
         },
@@ -306,6 +316,12 @@ export default {
         console.log("getMsgWidthStyle", msg, msg.text.length > 25 && msg.right==false)
         if(msg.text.length > 21 && msg.right==false) return {"width": "90%"}
         return {}
+    },
+    router_param_update: function(){
+        this.$router.replace({query: {
+                round: this.round,
+                max_round: this.max_round} 
+        })
     }
   }
 }
@@ -317,7 +333,7 @@ export default {
     }
     #chatroom_div_text_area{
         padding-top: 5px;
-        min-height: 1.85em;
+        min-height: 1.7em;
         line-height: 1.1;
     }
     #input_area{

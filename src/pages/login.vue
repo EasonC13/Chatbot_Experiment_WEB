@@ -7,13 +7,15 @@
     <button @click="socialLogin" class="social-button">
         <img alt="Google Logo" src="https://png.monster/wp-content/uploads/2020/11/b64cc812d68e951149b3e1a21c9a49e7-12019a02.png">
     </button>
-    <p>
-     或使用帳號密碼登入 <br>
-    </p>
-    <input type="text" v-model="email" placeholder="Email"><br>
-    <input type="password" v-model="password" placeholder="Password"><br>
-    <button @click="login">Login</button>
-    <p>You don't have an account ? You can <router-link to="/sign-up">create one</router-link></p>
+    <br>
+    <p>建議使用你的 Google 帳號繼續，請選擇於報名實驗時填寫的 Email 即可</p>
+    <p @click='account_password=!account_password'><u>或使用帳號密碼登入（請點我展開）</u></p>
+    <div v-if="account_password">
+      <input type="text" v-model="email" placeholder="Email"><br>
+      <input type="password" v-model="password" placeholder="Password"><br>
+      <button @click="login">Login</button>
+      <p>You don't have an account ? You can <router-link to="/sign-up">create one</router-link></p>
+    </div>
   </div>
 </template>
 
@@ -25,7 +27,8 @@
     data() {
       return {
         email: '',
-        password: ''
+        password: '',
+        account_password: false,
       }
     },
     methods: {
