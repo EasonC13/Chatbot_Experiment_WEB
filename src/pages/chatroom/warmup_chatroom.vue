@@ -26,7 +26,7 @@
                     <!-- 中繼資料 -->
                     <div class="meta">
                         <div class="item">
-                            13:20
+                            --:--
                         </div>
                     </div>
                 </div>

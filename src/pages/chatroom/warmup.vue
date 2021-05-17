@@ -13,7 +13,9 @@
             
           </div>
           <h1>實驗提示</h1>
-          One of three columns
+          本階段要確保你已經習慣聊天室操作<br>
+          請輸入十次任意內容<br>
+          完成暖身階段<br>
 
           <div style="height: 100vh" v-if="true"></div>
         </div>
