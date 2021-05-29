@@ -1,4 +1,6 @@
-# chatbot_experiment
+# chatbot experiment web
+The front-end part of the Chatbot_Experiment.
+Backend: https://github.com/EasonC13/AI_Chatbot_experiment_backend
 
 > A Vue.js project
 
