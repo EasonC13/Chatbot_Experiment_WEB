@@ -2,7 +2,7 @@
     <div class="col-sm" style="background-color: rgb(250,250,250); min-height: 100vh;">
           <div class="chatroom_chat_container overflow-scroll">
 
-       
+
         <!-- 使用 Telegram 樣式 -->
         <div class="cu chat" data-style="telegram" id="chatroom">
             <div class="message text" v-for="(item, index) in already_messages" :key="'test'+index"
@@ -29,7 +29,7 @@
                     </div>
                 </div>
             </div>
-            <div class="message text" :class="{right: message.right, read: message.right}" v-for="(message, index) in messages" 
+            <div class="message text" :class="{right: message.right, read: message.right}" v-for="(message, index) in messages"
              :key="index" :id='message.random_id'
              :style="getMsgWidthStyle(message)">
                 <!-- 大頭貼 -->
@@ -157,7 +157,7 @@ export default {
     bots: function () {
         return Array(this.bot_amount).fill(this.bot).flat()
     }
-      
+
   },
   mounted() {
         let vm = this
@@ -166,7 +166,7 @@ export default {
         document.getElementById("chatroom_div_text_area").focus()
         $("#chatroom_div_text_area").keypress(function(e){
             if(e.which == 13 && e.shiftKey){
-                
+
             }else if(e.which == 13){
                 e.preventDefault()
                 vm.send_msg()
@@ -190,9 +190,9 @@ export default {
 
             target.innerText = ""
             console.log("SEND", out_text)
-            
+
             var profile = firebase.auth().currentUser
-            
+
             let message = new Message(out_text, profile.displayName, profile.photoURL, true)
 
             console.log(profile, message)
@@ -210,16 +210,16 @@ export default {
                 this.can_chat = false
                 //alert("你已經用完聊天額度了")
             }
-            
+
             let response_count = 0
 
             this.bots.forEach(bot => {
 
                 let emotion_code = API_emotion_mapping[emotion_map_to_chinese[bot.emotion]] || 1
-                
+
                 axios({
                         method: "POST",
-                        url: `https://chatbot.dev.eason.tw/api/developer/generate_response`, 
+                        url: `https://chatbot.eason.tw/api/developer/generate_response`,
                         headers: {
                                 "accept": "application/json",
                                 'Content-Type': 'application/json'
@@ -238,14 +238,14 @@ export default {
                         target.innerText = out_text
                     })
                     .then(response => {
-                        
+
                         let text = response.data.responses[0]
                         let message = new Message(text, bot.display_name, bot.picture_url)
-                        
-                        
+
+
                         setTimeout(()=> {
                             this.messages.push(message)
-                            
+
                             this.scroll_to_msg(message)
                             response_count += 1
                             console.log(response_count, this.can_chat)
@@ -261,7 +261,7 @@ export default {
         },
         scroll_to_msg(message){
             setTimeout(()=> {
-                
+
                 let target = document.getElementById(message.random_id)
                 target.scrollIntoView({behavior: "smooth"})
 
@@ -270,28 +270,28 @@ export default {
                 //     let target_rect = target.getBoundingClientRect()
                 //     let text_area = document.getElementById("text_area")
                 //     let text_area_rect = text_area.getBoundingClientRect()
-                //     var overlap = !(target_rect.right < text_area_rect.left || 
-                //                     target_rect.left > text_area_rect.right || 
-                //                     target_rect.bottom < text_area_rect.top || 
+                //     var overlap = !(target_rect.right < text_area_rect.left ||
+                //                     target_rect.left > text_area_rect.right ||
+                //                     target_rect.bottom < text_area_rect.top ||
                 //                     target_rect.top > text_area_rect.bottom)
                 //     //console.log("overlap", overlap)
-                    
+
                 //     if(overlap){
                 //     target.scrollIntoView({behavior: "smooth"})
                 //     }
 
                 // }, 300)
-                
-                
+
+
             }, 300)
         },
         export_messages: function(){
-            
+
 
             var profile = firebase.auth().currentUser
             axios({
                         method: "POST",
-                        url: `https://chatbot.experiment.eason.tw/api/v1/message`, 
+                        url: `https://chatbot.experiment.eason.tw/api/v1/message`,
                         headers: {
                                 "accept": "application/json",
                                 'Content-Type': 'application/json'
@@ -320,7 +320,7 @@ export default {
     router_param_update: function(){
         this.$router.replace({query: {
                 round: this.round,
-                max_round: this.max_round} 
+                max_round: this.max_round}
         })
     }
   }
@@ -383,5 +383,5 @@ export default {
     .textarea[contenteditable]:empty::before {
     content: "請輸入聊天內容";
     color: gray;
-    } 
+    }
 </style>
