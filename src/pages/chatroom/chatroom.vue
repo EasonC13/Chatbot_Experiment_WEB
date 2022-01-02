@@ -229,7 +229,7 @@ export default {
                             text: out_text,
                             emotion: emotion_code,
                             response_count: 1,
-                            response_language: "zh-tw",
+                            // response_language: "zh-tw", // 拍攝英文截圖，先把它關掉
                         },
                     }).catch(function (error){
                         vm.can_send_msg = true
